@@ -16,10 +16,8 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js'></script>
         <script type="text/javascript" charset="utf-8">
-            var socket = io.connect('http://' + document.domain + ':' + location.port);
-            socket.on('connect', function() {
-                socket.emit('connect', {data: ':)'});
-            }).on('push', function(data) {
+            var socket = io.connect('http://' + document.domain);
+            socket.on('push', function(data) {
                 pushData(data.num);
             });
 
