@@ -1,7 +1,7 @@
-var socket = io.connect('http://' + document.domain);
-socket.on('push', function(data) {
-    pushData(data.num);
-});
+//var socket = io.connect('http://' + document.domain);
+//socket.on('push', function(data) {
+//    pushData(data.num);
+//});
 
 function newDate(days) {
     return moment().add(days, 'h').toDate();
@@ -27,7 +27,7 @@ Chart.defaults.global.tooltips.enabled = true;
 var labels = [newDate(-12), newDate(-11), newDate(-10)];
 var data = [72, 75, 73];
 
-var chart = new Chart(ctx, {
+/*var chart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: labels,
@@ -61,4 +61,4 @@ var chart = new Chart(ctx, {
             }]
         }
     }
-});
+});*/

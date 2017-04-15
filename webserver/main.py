@@ -6,9 +6,14 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+setup=True
+
 @app.route("/")
-def hello():
-	return render_template('index.html')
+def homepage():
+	if setup:
+		return render_template('connect.html', networks=["Test", "Test2", "Test3"])
+	else:
+		return render_template('connect.html', networks=[])
 
 @socketio.on('connect')
 def connect_handle():
