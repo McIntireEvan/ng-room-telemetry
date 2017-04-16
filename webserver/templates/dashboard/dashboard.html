@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard home{% endblock %}
+
+{% block head %}
+{{ super() }}
+
+<style>
+.side-nav .collapsible-header {
+    padding-left: 32px;
+}
+
+.side-nav .collapsible-body li a {
+    padding: 0px 12px 0px 42px;
+}
+</style>
+{% endblock %}
+
+{% block nav %}
+
+<a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+{{ super() }}
+
+{% endblock %}
+
+{% block content %}
+
+<ul id="slide-out" class="side-nav">
+    <li><a href="#!">Home</a></li>
+    <li class="no-padding">
+    <ul class="collapsible collapsible-accordion">
+        <li>
+            <a class="collapsible-header">Sensors</a>
+                <div class="collapsible-body">
+                    <ul>
+                        {% for sensor in sensors %}
+                            <li><a href="sensors/{{sensor.id}}" id="{{sensor.id}}">{{sensor.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li><a href="#!">Map</a></li>
+    <li><a href="#!">Emergency</a></li>
+    <li><a href="#!">Settings</a></li>
+</ul>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $(".button-collapse").sideNav();
+        $('.collapsible').collapsible();
+    });
+ </script>
+{% endblock %}

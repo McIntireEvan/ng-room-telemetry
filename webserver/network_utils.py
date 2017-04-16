@@ -39,4 +39,4 @@ def generate_wpa_supplicant_wpa2(ssid, identity, password):
     wpa.write(network_config)
 
 #print get_networks()
-generate_wpa_supplicant_wpa2("umd-secure", "anon", "pass")
+#generate_wpa_supplicant_wpa2("umd-secure", "anon", "pass")
