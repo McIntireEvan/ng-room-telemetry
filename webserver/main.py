@@ -14,9 +14,9 @@ def homepage():
 	if setup:
 		return render_template('connect.html', networks=["Test", "Test2", "Test3"])
 	else:
-		return render_template('dashboard/home.html', sensors=[{'id':'asd', 'name':'Living Room'}, {'id':'asdsdad', 'name':'Bedroom'}])
+		return render_template('dashboard/home.html', sensors=[{'id':'a', 'name':'Living Room', 'current': {'temp': 78, 'gas': True, 'occupancy': 2}}, {'id':'asdsdad', 'name':'Bedroom'}])
 
-
+@app.route("/sensors/<>")
 
 @app.route('/api/post/temp', methods=['POST'])
 def api_temperature():
