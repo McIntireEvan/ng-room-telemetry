@@ -14,16 +14,12 @@
         min-height: 30vh;
     }
 
-    .container {
-        margin-top: 20px;
-    }
-
     .card-data {
         margin-bottom: 10px;
     }
 
     .card-info {
-        float: right;
+        margin-left: 12em;
     }
 </style>
 {% endblock %}
@@ -62,7 +58,7 @@
                 <div class="card-content">
                     <span class="card-title">
                         {{ sensors[0].name }}
-                        <div class='card-info'>
+                        <span class='card-info'>
                             <div class="chip">{{ sensors[0].current.temp }}&deg;F</div>
                             <div class="chip">{{ sensors[0].current.occupancy }} Occupants</div>
                             {% if sensors[0].current.gas %}
@@ -70,10 +66,9 @@
                             {% else %}
                                 <div class="chip red lighten-2">Gas Dangerous</div>
                             {% endif %}
-                        </div>
+                        </span>
                     </span>
-                    <div class='card-data'>
-                    </div>
+
                     <div>
                         <canvas id="main-graph" height="400"></canvas>
                     </div>

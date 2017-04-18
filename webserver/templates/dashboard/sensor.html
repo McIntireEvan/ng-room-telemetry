@@ -1,0 +1,178 @@
+{% extends "dashboard/dashboard.html" %}
+{% block title %}{{sensor.name}}{% endblock %}
+
+{% block head %}
+{{ super() }}
+
+<style>
+.c-button {
+    padding-right: 10px;
+}
+
+.input-field.inline {
+    width: 2.5em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="container col s12">
+<div class="row">
+    <div class="col s4">
+        <div class="dash-left">
+            <div class="card">
+                <div class="card-content white-text blue">
+                    <span class="card-title">{{sensor.name}}</span>
+                    <div>
+                        First Connected: April 14th, 2017 <br/>
+                        Uptime: 2 days <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                {% if sensor.current.gas %}
+                <div class="card-content white-text green">
+                    <span class="card-title">Gas</span>
+                    <div>
+                        Everything looks good!
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-content white-text red">
+                    <span class="card-title">Gas</span>
+                    <div>
+                        You might want to look into this.
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">
+                        {{sensor.current.occupancy}} people detected
+                    </span>
+                    <div>
+                        <canvas id="occupancy-graph" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s8">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    Temperature
+                </span>
+                <span class="card-content">
+                    <div class="row">
+                        <div class="col s8">
+                            <div>
+                                <canvas id="temp-graph" height="400"></canvas>
+                            </div>
+                        </div>
+                        <div class="col s4">
+                            <div>
+                                <h3>{{ sensor.current.temp }}&deg;F</h3>
+                            </div>
+                            <div>
+                                <!--high-->
+                            </div>
+                            <div>
+                                <!--low-->
+                            </div>
+                            <div>
+                                Show data for
+                                <div class="input-field">
+                                    <select>
+                                        <option value="1">Past Minute</option>
+                                        <option value="2">Past Hour</option>
+                                        <option value="3">Past 12 Hours</option>
+                                        <option value="4" selected>Past Day</option>
+                                    </select>
+                                    <label>Timespan</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed-action-btn"><a class="btn-floating btn-large waves-effect waves-light grey" href="#settings-modal"><i class="material-icons">settings</i></a></div>
+
+<div id="settings-modal" class="modal">
+    <div class="modal-content">
+        <h4> Settings </h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input placeholder="{{sensor.name}}" value="{{sensor.name}}" id="sensor_name" type="text">
+                <label for="sensor_name">Sensor Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card-panel yellow darken-2">
+                    <span class="white-text">
+                        <div>
+                            Warn me when the temperature is <br/>Above
+                            <div class="input-field inline">
+                                <input id="temp-warn-max" type="number" class="validate">
+                            </div>
+                            &deg;F <br/>
+                            Below
+                            <div class="input-field inline">
+                                <input id="temp-warn-min" type="number" class="validate">
+                            </div>
+                            &deg;F
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="card-panel red">
+                    <span class="white-text">
+                        <div>
+                            Alert me when the temperature is <br/>Above
+                            <div class="input-field inline">
+                                <input id="alert-warn-max" type="number" class="validate">
+                            </div>
+                            &deg;F <br/>
+                            Below
+                            <div class="input-field inline">
+                                <input id="alert-warn-min" type="number" class="validate">
+                            </div>
+                            &deg;F
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Confirm</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-yellow btn-flat">Pause Sensor</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Delete Data</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Delete Sensor</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+ $(document).ready(function() {
+    $('.modal').modal();
+    $('select').material_select();
+    var temp = createGraph('temp-graph');
+    var people = createGraph('occupancy-graph');
+    people.options.scales.yAxes[0].ticks.suggestedMin = 0;
+    people.options.scales.yAxes[0].ticks.suggestedMax = 5;
+    people.update(50, true);
+});
+</script>
+{% endblock %}
