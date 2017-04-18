@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-
+import time
+import json
+import subprocess
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
 from network_utils import get_networks
-import time
-import json
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -103,5 +103,9 @@ def alerts():
 			alerts.append(sensors[i])
 	return alerts
 
+def enable_ap():
+	p1 = subprocess.Popen(["./setup/enable_ap.sh"])
+
 if __name__ == "__main__":
+	enable_ap()
 	socketio.run(app)
