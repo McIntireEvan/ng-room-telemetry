@@ -31,9 +31,15 @@
         <div class="col s5">
             <div class="dash-left">
                 <div class="card">
+                    {% if broadcasting %}
+                    <div class="card-content white-text red">
+                        <span class="card-title">Main Network is down<br/>Hosting network "Telos"</span>
+                    </div>
+                    {% else %}
                     <div class="card-content white-text green">
                         <span class="card-title">Operating Normally</span>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="card">
                     <div class="card-content white-text blue">
@@ -59,8 +65,8 @@
                     <span class="card-title">
                         {{ sensors[0].name }}
                         <span class='card-info'>
-                            <div class="chip">{{ sensors[0].current.temp }}&deg;F</div>
-                            <div class="chip">{{ sensors[0].current.occupancy }} Occupants</div>
+                            <div class="chip"><span id='temp-display'>{{ sensors[0].current.temp }}</span>&deg;F</div>
+                            <div class="chip"><span id='occ-display'>{{ sensors[0].current.occupancy }}</span> Occupants</div>
                             {% if sensors[0].current.gas %}
                                 <div class="chip green lighten-2">Gas OK</div>
                             {% else %}
@@ -88,7 +94,11 @@
 {% block scripts %}
 {{super()}}
 <script>
-    var graph = createGraph('main-graph');
-    dataListen('main-graph');
+    var graph;
+    $(document).ready(function() {
+        graph = createGraph('main-graph');
+        lastMinute(graph);
+        dataListen(graph);
+    });
 </script>
 {% endblock %}

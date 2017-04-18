@@ -12,52 +12,68 @@
         <li class="collection-header"><h3>Choose a network <i class="material-icons">wifi</i></h3></li>
         {% for network in networks %}
             <li class="collection-item network-connect"><h5>
-                <a href="#modal1">{{ network }}</a>
+                <a href="#config-modal">{{ network }}</a>
             </h5></li>
         {% endfor %}
     </ul>
 {% else %}
-    <h1 class="center-align">No networks found :(</h1>
+    <h1 class="center-align">No networks found</h1>
 {% endif %}
 </div>
 
 <!-- Modal Structure -->
-<div id="modal1" class="modal">
+<div id="config-modal" class="modal">
+    <form id="network-lgoin">
     <div class="modal-content">
         <h4>Enter details for <span id="network-name">Network</span></h4>
-        <form>
             <div class="input-field">
                 <input placeholder="Pi Hub" id="device_name" type="text" class="validate" required>
                 <label for="device_name">Device Name</label>
             </div>
             <div class="input-field col s12">
-                <select>
+                <select id="net-type">
                     <option value="" disabled selected>Choose</option>
                     <option id="none" value="1">None</option>
-                    <option id="wpa" value="1">WPA</option>
+                    <option id="wpa" value="2">WPA</option>
                     <option id="wpa2" value="3">WPA/WPA2 Enterprise</option>
                 </select>
                 <label>Network Security Type</label>
             </div>
-            <div class="input-field">
-                <input id="username" type="text" class="validate" required>
+            <div class="input-field" id="if-user">
+                <input id="username" type="text" class="validate">
                 <label for="username">Username</label>
             </div>
-            <div class="input-field">
-                <input id="password" type="password" class="validate" required>
+            <div class="input-field" id="if-pass">
+                <input id="password" type="password" class="validate">
                 <label for="password">Password</label>
             </div>
-        </form>
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn green">Connect</a>
     </div>
+    </form>
 </div>
 
 <script>
 $(document).ready(function() {
     $('.modal').modal();
     $('select').material_select();
+
+    $('#net-type').on('change', function(evt) {
+        var c = $(this).val();
+        if(c == 1) {
+            $('#if-user, #if-pass').hide();
+                console.log("111111111111");
+        } else if(c == 2) {
+            $('#if-user').hide();
+            $('#if-pass').show();
+            console.log("222222222");
+        } else if(c == 3) {
+            $('#if-user').show();
+            $('#if-pass').show();
+            console.log("3");
+        }
+    });
 });
 </script>
 {% endblock %}

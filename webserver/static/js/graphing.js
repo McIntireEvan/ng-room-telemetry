@@ -1,4 +1,5 @@
-var socket = io("http://10.104.84.214")
+//var socket = io("http://10.104.84.214")
+var socket = io("localhost:5000")
 
 socket.on('connect', function() {
     console.log("Talking with server!");
@@ -94,8 +95,42 @@ function lastDay(chart) {
     scaleHours(chart);
 }
 
-function dataListen(name) {
+function dataListen(chart) {
+    console.log(name)
     socket.on('temp-data', function(data) {
-        addData(name, data.data, (new Date).now());
+        addData(chart, data.data, (new Date()).getTime());
+        lastMinute(chart);
+        $('#temp-display').html(data.data);
     });
+
+    socket.on('occ-data', function(data) {
+        addData(chart, data.data, (new Date()).getTime());
+        lastMinute(chart);
+        $('#occ-display').html(data.data);
+    });
+
+    socket.on('gas-data', function(data) {
+        addData(chart, data.data, (new Date()).getTime());
+        lastMinute(chart);
+        $('#temp-display').html(data.data);
+    });
+
+    socket.on('temp-data-dump', function(data) {
+        var temps = [];
+        var labels = [];
+
+        for(var key in data) {
+            if(data.hasOwnProperty(key)) {
+                console.log(moment(data[key.time]));
+                temps.push(data[key].data);
+                labels.push(moment(data[key.time]));
+            }
+        }
+
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = temps;
+        chart.update(50, true);
+    });
+
+    //socket.emit('request-temp-data', {'id': 'xyz'})
 }
