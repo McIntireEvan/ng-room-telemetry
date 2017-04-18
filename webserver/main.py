@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template, request
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send, emit
 from network_utils import get_networks
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-setup=True
+setup=False
 
 @app.route("/")
 def homepage():
@@ -26,7 +26,8 @@ def sensors_page(sensor):
 
 @app.route('/api/post/temp', methods=['POST'])
 def api_temperature():
-	print(request.get_json())
+	# Add to json
+	send('temp-data', request.get_json())
 
 @app.route('/api/post/occupancy', methods=['POST'])
 def api_occupancy():

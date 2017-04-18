@@ -1,3 +1,9 @@
+var socket = io("http://10.104.84.214")
+
+socket.on('connect', function() {
+    console.log("Talking with server!");
+})
+
 Chart.defaults.global.maintainAspectRatio = false;
 Chart.defaults.global.legend.display = false;
 Chart.defaults.global.tooltips.enabled = true;
@@ -86,4 +92,10 @@ function lastTwelveHours(chart) {
 function lastDay(chart) {
     chart.options.scales.xAxes[0].time.min = moment().subtract(1, 'days');
     scaleHours(chart);
+}
+
+function dataListen(name) {
+    socket.on('temp-data', function(data) {
+        addData(name, data.data, (new Date).now());
+    });
 }
