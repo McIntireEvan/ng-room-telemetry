@@ -11,7 +11,7 @@ socketio = SocketIO(app)
 
 setup=False
 
-sensors = []
+sensors = [{'id':'a', 'name':'Living Room', 'current': {'temp': 78, 'gas': True, 'occupancy': 2}}]
 temp_warn = 80
 temp_alert = 100
 
@@ -20,7 +20,7 @@ def homepage():
 	if setup:
 		return render_template('connect.html', networks=get_networks())
 	else:
-		return render_template('dashboard/home.html', sensors=[{'id':'a', 'name':'Living Room', 'current': {'temp': 78, 'gas': True, 'occupancy': 2}}, {'id':'asdsdad', 'name':'Bedroom'}], broadcasting=True)
+		return render_template('dashboard/home.html', sensors=sensors, broadcasting=False, )
 
 @app.route("/configure")
 def configure():

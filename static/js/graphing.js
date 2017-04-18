@@ -103,12 +103,6 @@ function dataListen(chart) {
         $('#temp-display').html(data.data);
     });
 
-    socket.on('occ-data', function(data) {
-        addData(chart, data.data, (new Date()).getTime());
-        lastMinute(chart);
-        $('#occ-display').html(data.data);
-    });
-
     socket.on('gas-data', function(data) {
         addData(chart, data.data, (new Date()).getTime());
         lastMinute(chart);
@@ -133,4 +127,12 @@ function dataListen(chart) {
     });
 
     //socket.emit('request-temp-data', {'id': 'xyz'})
+}
+
+function occListen(chart) {
+    socket.on('occ-data', function(data) {
+        addData(chart, data.data, (new Date()).getTime());
+        lastMinute(chart);
+        $('#occ-display').html(data.data);
+    });
 }

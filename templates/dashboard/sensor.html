@@ -26,7 +26,7 @@
                     <span class="card-title">{{sensor.name}}</span>
                     <div>
                         First Connected: April 14th, 2017 <br/>
-                        Uptime: 2 days <br/>
+                        Uptime: 4 days <br/>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">
-                        {{sensor.current.occupancy}} people detected
+                        <span id="occ-display">{{sensor.current.occupancy}}</span> people detected
                     </span>
                     <div>
                         <canvas id="occupancy-graph" height="200"></canvas>
@@ -74,22 +74,22 @@
                         </div>
                         <div class="col s4">
                             <div>
-                                <h3>{{ sensor.current.temp }}&deg;F</h3>
+                                <h3 id="temp-display">{{ sensor.current.temp }}&deg;F</h3>
                             </div>
                             <div>
-                                <!--high-->
+                                <h6>93&deg;F high</h6>
                             </div>
                             <div>
-                                <!--low-->
+                                <h6>72&deg;F low</h6>
                             </div>
                             <div>
                                 Show data for
                                 <div class="input-field">
                                     <select>
-                                        <option value="1">Past Minute</option>
+                                        <option value="1" selected>Past Minute</option>
                                         <option value="2">Past Hour</option>
                                         <option value="3">Past 12 Hours</option>
-                                        <option value="4" selected>Past Day</option>
+                                        <option value="4">Past Day</option>
                                     </select>
                                     <label>Timespan</label>
                                 </div>
@@ -173,6 +173,14 @@
     people.options.scales.yAxes[0].ticks.suggestedMin = 0;
     people.options.scales.yAxes[0].ticks.suggestedMax = 5;
     people.update(50, true);
+
+    lastMinute(temp);
+    dataListen(temp);
+
+    lastHour(people)
+    occListen(people);
+
+    lastHour
 });
 </script>
 {% endblock %}
